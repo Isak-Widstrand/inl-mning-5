@@ -107,6 +107,10 @@ class Polynom:
         result_coefficients = [i * c for i, c in enumerate(self.coefficients)][1:]
 
         # Skapa ett nytt polynom med de deriverade koefficienterna.
+        # För att behålla högsta exponent först, vänd ordningen på listan av koefficienter
+        result_coefficients.reverse()
+
+        # Skapa ett nytt polynom med de deriverade koefficienterna.
         return Polynom(self.degree - 1, result_coefficients)
 
     def plot(self, x_min=-10, x_max=10, num_points=400):
@@ -139,7 +143,8 @@ class Polynom:
         Integrera polynomet mellan a och b genom att skapa den primitiva funktionen.
         """
         # Skapa koefficienterna för den primitiva funktionen genom att dividera varje koefficient med (i+1).
-        integral_coefficients = [c / (i + 1) for i, c in enumerate(self.coefficients)]
+        # Vi måste lägga till en noll-koefficient för den nya konstanten som adderas i integreringen.
+        integral_coefficients = [c / (i + 1) for i, c in enumerate(self.coefficients)] + [0]
 
         # Skapa ett polynom för den primitiva funktionen med de nya koefficienterna.
         integral_polynom = Polynom(self.degree + 1, integral_coefficients)
@@ -171,7 +176,7 @@ p5=p1*p2 # p5 = 3x^5 + 3x^4 + x^3 + 6x^2 + 5x
 print(f"p5: {p5}")
 
 # Derivering av polynom
-p6 = p1.diff()  # p6 = 9x^2 + 1  #FEL!!!!
+p6 = p1.diff()  # p6 = 9x^2 + 1  
 print(f"p6 (derivata av p1): {p6}")
 
 # Jämför om polynomen är lika
@@ -189,5 +194,5 @@ x0 = p1.zero(0)   #Nollställe: -1.0921268117651426
 print(f"Nollställe för p1: {x0}")
 
 # Integrera polynomet p1 mellan 0 och 1
-I = p1.integrate(0, 1)  # Integralen 0 till 1: 6.2500000 #FEL!!!!
+I = p1.integrate(0, 1)  # Integralen 0 till 1: 6.2500000 
 print(f"Integralen av p1 från 0 till 1: {I}")
