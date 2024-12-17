@@ -85,7 +85,7 @@ class Polynom:
         for i, a in enumerate(self.coefficients):
             for j, b in enumerate(other.coefficients):
                 # Rätt index beräknas genom att summera exponenterna
-                index = i + j
+                index = (len(self.coefficients) - 1 - i) + (len(other.coefficients) - 1 - j)
                 # Lägg till produkten av termerna på rätt position i resultatkoefficienterna
                 result_coefficients[index] += a * b
 
